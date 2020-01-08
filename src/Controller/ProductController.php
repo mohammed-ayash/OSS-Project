@@ -37,6 +37,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/", name="product_index", methods={"GET","POST"})
+     *
      */
     public function index(Request $request ,productGridService $productService): Response
     {
