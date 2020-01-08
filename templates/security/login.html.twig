@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% block include %}
+{% endblock %}
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+<div class="container" >
+    <form action="{{ path('security_login') }}" method="post" >
+        <div>
+            <div class="form-group">
+                <label class="form-control-label  required" for="inputUsername">Username</label>
+                <input type="text" value="{{ last_username }}" name="_username" required="required" id="inputusername" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label  required" for="inputPassword">Password</label>
+                <input type="password" name="_password" required="required" id="inputPassword" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <button id="Login" class="btn btn-lg btn-primary" type="submit">Login in</button>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}">
+        </div>
+    </form>
+</div>
+{% endblock %}

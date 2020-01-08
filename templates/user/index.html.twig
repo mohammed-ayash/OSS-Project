@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/js/fancybox/dist/jquery.fancybox.min.css">
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">User</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">User</li>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        <a href="{{ path('user_new') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle pr-1"></i>Add new</a>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title m-b-0">User</h5>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Picture</th>
+                <th>Username</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <td>
+                    {% if user.getpictureWebPath() %}
+                        {% set imageUrl = asset(user.getpictureWebPath()) %}
+                        <a class="fancybox" href="{{ imageUrl }}"><img src="{{ imageUrl }}" style="max-width:50px;" /></a>
+                    {% endif %}
+                    </td>
+                    <td>{{ user.username }}</td>
+                    {% if user.type %}
+                    <td>Owner Market</td>
+                    {% else %}
+                    <td>Owner Market</td>
+                     {% endif %}
+                    <td>
+                        <a class="btn btn-outline-info mr-2" href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                        <a class="btn btn-outline-success ml-2" href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                        {{ include('user/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="4">
+                    <div class="dataTable_wrapper">
+                        <div class="dataTablea_paginate pagine_simple_numbers">
+                            {{ knp_pagination_render(users) }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $('.fancybox').fancybox({});
+    </script>
+{% endblock %}

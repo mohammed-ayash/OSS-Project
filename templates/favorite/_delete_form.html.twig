@@ -1,0 +1,5 @@
+<form class="deleteItem btn" method="post" action="{{ path('favorite_delete', {'id': favorite.id}) }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ favorite.id) }}">
+    <button type="submit" class="btn btn-outline-danger">Delete</button>
+</form>

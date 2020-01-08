@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video search{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/js/fancybox/dist/jquery.fancybox.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Search </h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Search</li>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+{% endblock %}
+
+{% block body %}
+    <br />
+    <!-- SEARCH FORM -->
+    {{ form_errors(formFilter) }}
+    <form class="gridFilter" novalidate action="{{formFilter.vars.action}}" method="post">
+        <div class="input-group input-group-sm">
+            {{ form_widget(formFilter.search, {attr:{'placeholder': 'search for user ','class':'form-control form-control-navbar'}}) }}
+            <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+
+            </div>
+        </div>
+        {{ form_rest(formFilter) }}
+    </form>
+    <br />
+
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title m-b-0">Search</h5>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Picture</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        {% if product.getpictureWebPath() %}
+                            {% set imageUrl = asset(product.getpictureWebPath()) %}
+                            <a class="fancybox" href="{{ imageUrl }}"><img src="{{ imageUrl }}" style="max-width:50px;" /></a>
+                        {% endif %}
+                    <td>
+                        <a class="btn btn-outline-info mr-2" href="{{ path('product_show', {'id': product.id}) }}">show</a>
+                        {% if is_granted('edit',product) %}
+                            <a class="btn btn-outline-success ml-2" href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                        {% endif %}
+                        {% if is_granted('delete',product) %}
+                            {{ include('product/_delete_form.html.twig') }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="dataTables_wrapper">
+            <div class="dataTables_paginate paging_simple_numbers">
+                {{ knp_pagination_render(products) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $('.fancybox').fancybox({
+
+        });
+    </script>
+{% endblock %}

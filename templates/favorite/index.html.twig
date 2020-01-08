@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Favorite index{% endblock %}
+
+{% block body %}
+    <h1>Favorite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>product</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for favorite in favorites %}
+            {% if is_granted('edit',favorite) %}
+            <tr>
+                <td>{{ favorite.id }}</td>
+                <td>{{ favorite.product }}</td>
+                <td>
+                    {% if is_granted('edit',favorite) %}
+                        <a class="btn btn-outline-success ml-2" href="{{ path('favorite_edit', {'id': favorite.id}) }}">edit</a>
+                    {% endif %}
+                    {% if is_granted('delete',favorite) %}
+                        {{ include('favorite/_delete_form.html.twig') }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

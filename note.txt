@@ -1,0 +1,2 @@
+remove form search from nav bar
+and set in another page

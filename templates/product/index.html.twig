@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/js/fancybox/dist/jquery.fancybox.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">User</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">User</li>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+{% endblock %}
+
+
+
+{% block body %}
+    <h1>Product</h1>
+    {% if is_granted('ROLE_owner') %}
+    <div>
+        <a href="{{ path('product_new') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle pr-1"></i>Add new</a>
+    </div>
+    <br />
+    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title m-b-0">Product</h5>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Picture</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        {% if product.getpictureWebPath() %}
+                            {% set imageUrl = asset(product.getpictureWebPath()) %}
+                            <a class="fancybox" href="{{ imageUrl }}"><img src="{{ imageUrl }}" style="max-width:50px;" /></a>
+                        {% endif %}
+                    <td>
+                        <a class="btn btn-outline-info mr-2" href="{{ path('product_show', {'id': product.id}) }}">show</a>
+                        {% if is_granted('edit',product) %}
+                             <a class="btn btn-outline-success ml-2" href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                        {% endif %}
+                        {% if is_granted('delete',product) %}
+                            {{ include('product/_delete_form.html.twig') }}
+                        {% endif %}
+                        {% if is_granted('ROLE_customer') %}
+                            <a class="btn btn-outline-success ml-2" href="{{ path('favorite_new', {'id': product.id}) }}">favorite</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_owner') %}
+                            <a class="btn btn-outline-success ml-2" href="{{ path('favorite_new', {'id': product.id}) }}">favorite</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4">
+                    <div class="dataTable_wrapper">
+                        <div class="dataTablea_paginate pagine_simple_numbers">
+                            {{ knp_pagination_render(products) }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $('.fancybox').fancybox({});
+    </script>
+{% endblock %}
+

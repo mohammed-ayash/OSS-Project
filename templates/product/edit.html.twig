@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/js/fancybox/dist/jquery.fancybox.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Edit Product</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('product_index') }}">Products</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Product</li>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="{{ path('product_new') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle pr-1"></i>Add</a>
+        <a href="{{ path('product_index') }}" class="btn float-right btn-dark btn-sm"><i class="fas fa-arrow-alt-circle-left pr-1"></i>Back to Users</a>
+        {{ include('product/_delete_form.html.twig') }}
+
+    </div>
+    <br />
+
+
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Edit Product</h3>
+        </div>
+
+        {{ form_start(form) }}
+        <div class="card-body">
+            {{ form_widget(form) }}
+            <div class="form-group">
+                {% if product is defined and product.getpictureWebPath() %}
+                    {% set imageUrl = asset(product.getpictureWebPath()) %}
+                    <a class="fancybox" rel="gallery" href="{{ imageUrl }}">
+                        <img src="{{ imageUrl }}" alt="user image" style="max-width: 100px;">
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info">Edit</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $('.fancybox').fancybox({});
+    </script>
+{% endblock %}
