@@ -39,7 +39,7 @@ class UserType extends AbstractType
             ])
             ->add('birthday')
             ->add('type', ChoiceType::class, [
-                'choices' => ['Owner Shop' => true, 'Customer' => false],
+                'choices' => ['Customer' => false, 'Owner Shop' => true],
             ])
             ->add('country')
         ;

@@ -35,6 +35,6 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/product/(new|edit|delete), roles: [ROLE_owner] }
-    - { path: ^/country/new, roles: [ROLE_Admin,ROLE_customer] }
+    - { path: ^/country/(new|Setowner), roles: [ROLE_Admin,ROLE_customer] }
     - { path: ^/(user|country), roles: [ROLE_Admin] }
     - { path: ^/favorite, roles: [ROLE_customer,ROLE_owner,ROLE_Admin] }
