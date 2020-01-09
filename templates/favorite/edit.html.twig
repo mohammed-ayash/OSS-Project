@@ -1,13 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Favorite{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Edit Favorite</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('favorite_index') }}">Favorites</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Favorite</li>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Favorite</h1>
+    <div>
+        <a href="{{ path('favorite_index') }}" class="btn float-right btn-dark btn-sm"><i class="fas fa-arrow-alt-circle-left pr-1"></i>Back to Favorites </a>
+        {{ include('favorite/_delete_form.html.twig') }}
 
-    {{ include('favorite/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+    <br />
 
-    <a href="{{ path('favorite_index') }}">back to list</a>
 
-    {{ include('favorite/_delete_form.html.twig') }}
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Edit Favorite</h3>
+        </div>
+
+        {{ form_start(form) }}
+        <div class="card-body">
+            {{ form_widget(form) }}
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info">Edit</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
 {% endblock %}
+

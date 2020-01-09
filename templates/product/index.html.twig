@@ -10,12 +10,12 @@
 {% block breadcrumb %}
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">User</h1>
+            <h1 class="m-0 text-dark">Product</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">User</li>
+                <li class="breadcrumb-item active" aria-current="page">Product</li>
             </ol>
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -24,7 +24,6 @@
 
 
 {% block body %}
-    <h1>Product</h1>
     {% if is_granted('ROLE_owner') %}
     <div>
         <a href="{{ path('product_new') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle pr-1"></i>Add new</a>
@@ -32,9 +31,6 @@
     <br />
     {% endif %}
     <div class="card">
-        <div class="card-body">
-            <h5 class="card-title m-b-0">Product</h5>
-        </div>
         <table class="table">
             <thead>
             <tr>

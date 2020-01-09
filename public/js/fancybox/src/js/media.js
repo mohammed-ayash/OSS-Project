@@ -189,7 +189,7 @@
         src: url,
         origSrc: item.src,
         contentSource: provider,
-        contentType: type === "image" ? "image" : provider == "gmap_place" || provider == "gmap_search" ? "map" : "video"
+        contentType: type === "image" ? "image" : provider == "gmap_place" || provider == "gmap_search" ? "map" : "product.css"
       });
     } else if (url) {
       item.type = item.opts.defaultType;

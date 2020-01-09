@@ -27,7 +27,7 @@
     {{ form_errors(formFilter) }}
     <form class="gridFilter" novalidate action="{{formFilter.vars.action}}" method="post">
         <div class="input-group input-group-sm">
-            {{ form_widget(formFilter.search, {attr:{'placeholder': 'search for user ','class':'form-control form-control-navbar'}}) }}
+            {{ form_widget(formFilter.search, {attr:{'placeholder': 'search for product '}}) }}
             <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                     <i class="fas fa-search"></i>

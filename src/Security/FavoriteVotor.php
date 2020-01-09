@@ -19,6 +19,7 @@ class FavoriteVotor extends Voter
         if (!in_array($attribute,[self::EDIT,self::DELETE])){
             return false;
         }
+        //check if the validation in Favorite subject
         if (!$subject instanceof Favorite){
             return false;
         }
@@ -32,11 +33,14 @@ class FavoriteVotor extends Voter
         if (!$authentictedUser instanceof User){
             return false;
         }
+        //check if the user is admin
+        if ($authentictedUser->getRoles()[0]== 'ROLE_Admin' )
+            return true;
         /**
          * @var Favorite $favorite
          */
         $favorite=$subject;
-
+        //check if the favorite product to this user
         return  $favorite->getUser()->getid() === $authentictedUser->getid();
     }
 }

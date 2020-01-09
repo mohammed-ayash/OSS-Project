@@ -57,7 +57,7 @@
 
       // Check if reached last element
       if (current && (force === true || current.opts.loop || instance.currIndex < instance.group.length - 1)) {
-        if (self.isActive && current.contentType !== "video") {
+        if (self.isActive && current.contentType !== "product.css") {
           if (self.$progress) {
             $.fancybox.animate(self.$progress.show(), {
               scaleX: 1

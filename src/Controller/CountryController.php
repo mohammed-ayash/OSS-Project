@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Country;
 use App\Form\CountryType;
+use DoctrineExtensions\Query\Oracle\ToChar;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Route("/country")
@@ -29,26 +31,51 @@ class CountryController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="country_new", methods={"GET","POST"})
+     * @Route("/Setowner", name="country_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function Setowner(Request $request ,TokenStorageInterface $tokenStorage): Response
     {
-        $country = new Country();
-        $form = $this->createForm(CountryType::class, $country);
-        $form->handleRequest($request);
+        $token=$tokenStorage->getToken();
+        $user=$token->getUser();
+        $status = $user->gettype();
+        $user->settype(!$status);
+        $this->getDoctrine()->getManager()->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($country);
-            $entityManager->flush();
+        $newStatus = $user->gettype() ? 'owner shop' : 'Customer';
+        $this->get('session')->getFlashBag()->add(
+            'success', "The status of the user ({$user->getUsername()}) has been changed to \"{$newStatus}\""
+        );
 
-            return $this->redirectToRoute('country_index');
+        $referer = $request->headers->get('referer');
+        if($referer) {
+            return $this->redirect($referer);
+        }else{
+            return $this->redirectToRoute('user_list');
         }
+    }
 
-        return $this->render('country/new.html.twig', [
-            'country' => $country,
-            'form' => $form->createView(),
-        ]);
+    /**
+     * @Route("/new", name="country_new2", methods={"GET","POST"})
+     */
+    public function new(Request $request ,TokenStorageInterface $tokenStorage): Response
+    {
+        $token=$tokenStorage->getToken();
+        $user=$token->getUser();
+        $status = $user->gettype();
+        $user->settype(!$status);
+        $this->getDoctrine()->getManager()->flush();
+
+        $newStatus = $user->gettype() ? 'owner shop' : 'Customer';
+        $this->get('session')->getFlashBag()->add(
+            'success', "The status of the user ({$user->getUsername()}) has been changed to \"{$newStatus}\""
+        );
+
+        $referer = $request->headers->get('referer');
+        if($referer) {
+            return $this->redirect($referer);
+        }else{
+            return $this->redirectToRoute('user_list');
+        }
     }
 
     /**

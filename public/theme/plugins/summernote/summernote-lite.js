@@ -635,18 +635,18 @@
   var videoDialog = function (opt) {
       var body = '<div class="note-form-group">' +
           '<label class="note-form-label">' +
-          opt.lang.video.url + ' <small class="text-muted">' +
-          opt.lang.video.providers + '</small>' +
+          opt.lang.product.url + ' <small class="text-muted">' +
+          opt.lang.product.providers + '</small>' +
           '</label>' +
           '<input class="note-video-url note-input" type="text" />' +
           '</div>';
       var footer = [
           '<button type="button" href="#" class="note-btn note-btn-primary note-video-btn disabled" disabled>',
-          opt.lang.video.insert,
+          opt.lang.product.insert,
           '</button>',
       ].join('');
       return dialog({
-          title: opt.lang.video.insert,
+          title: opt.lang.product.insert,
           fade: opt.fade,
           body: body,
           footer: footer
@@ -6601,10 +6601,10 @@
                   click: _this.context.createInvokeHandler('imageDialog.show')
               }).render();
           });
-          this.context.memo('button.video', function () {
+          this.context.memo('button.product.css', function () {
               return _this.button({
-                  contents: _this.ui.icon(_this.options.icons.video),
-                  tooltip: _this.lang.video.video,
+                  contents: _this.ui.icon(_this.options.icons.product),
+                  tooltip: _this.lang.product.product,
                   click: _this.context.createInvokeHandler('videoDialog.show')
               }).render();
           });
@@ -7498,14 +7498,14 @@
           var $container = this.options.dialogsInBody ? this.$body : this.$editor;
           var body = [
               '<div class="form-group note-form-group row-fluid">',
-              "<label class=\"note-form-label\">" + this.lang.video.url + " <small class=\"text-muted\">" + this.lang.video.providers + "</small></label>",
+              "<label class=\"note-form-label\">" + this.lang.product.url + " <small class=\"text-muted\">" + this.lang.product.providers + "</small></label>",
               '<input class="note-video-url form-control note-form-control note-input" type="text" />',
               '</div>',
           ].join('');
           var buttonClass = 'btn btn-primary note-btn note-btn-primary note-video-btn';
-          var footer = "<input type=\"button\" href=\"#\" class=\"" + buttonClass + "\" value=\"" + this.lang.video.insert + "\" disabled>";
+          var footer = "<input type=\"button\" href=\"#\" class=\"" + buttonClass + "\" value=\"" + this.lang.product.insert + "\" disabled>";
           this.$dialog = this.ui.dialog({
-              title: this.lang.video.insert,
+              title: this.lang.product.insert,
               fade: this.options.dialogsFade,
               body: body,
               footer: footer
@@ -8066,7 +8066,7 @@
               ['color', ['color']],
               ['para', ['ul', 'ol', 'paragraph']],
               ['table', ['table']],
-              ['insert', ['link', 'picture', 'video']],
+              ['insert', ['link', 'picture', 'product.css']],
               ['view', ['fullscreen', 'codeview', 'help']],
           ],
           // popover

@@ -27,7 +27,7 @@ class UserController extends AbstractController
         $users = $paginator->paginate(
             $query,
             $request->query->getInt('page' , 1),
-            2,
+            10,
             [ 'wrap-queries' => true]
 
         );

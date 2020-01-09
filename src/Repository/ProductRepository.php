@@ -25,11 +25,14 @@ class ProductRepository extends ServiceEntityRepository
     public function uploadPicture(Product $product, $uploadedFile)
     {
         $em = $this->getEntityManager();
+        //check the file if UploadedFile
         if ($uploadedFile instanceof  UploadedFile)
         {
+            //uuid4 use for create file name string
             $Uuid4 = Uuid::uuid4();
             $filename="{$Uuid4->toString()}.jpg";
             $storeFolder = $product->getpictureUploadDir();
+            //delete picture from the source
             $product->deleteCurrentpicture();
             $uploadedFile->move($storeFolder,$filename);
             $product->setPicture($filename);

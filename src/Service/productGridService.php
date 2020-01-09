@@ -32,38 +32,41 @@ class productGridService extends DataGrid
         $this->em = $em;
         $this->formFactory = $formFactory;
     }
-
+    //for get the data from DB
     public function getGridData($page = 1)
     {
         $parameters = [];
+        //create the query
         $dql = "SELECT p 
                 FROM App:Product p
                 WHERE 1=1";
 
         $searchValue = $this->getFormDataElement('search');
+        //check if the use  search
         if($searchValue) {
             $dql .= 'AND MATCH (p.name) AGAINST (:search IN BOOLEAN MODE) > 0 ';
             $parameters['search'] = $searchValue;
         }
-
+        //check if the not use search
         if(empty($searchValue)) {
             $dql .= 'ORDER BY p.id DESC ';
         }
-
+        //get query from DB
         $query = $this->em->createQuery($dql);
         if(count($parameters)) {
             $query->setParameters($parameters);
         }
-
+        //set pagination
         $pagination = $this->paginator->paginate(
             $query,
             $page,
-            5,
+            6,
             ['wrap-queries' => true]
         );
 
         return $pagination;
     }
+    //create method form search
     public function getFilterForm($formActionUrl, $data = null, $options = [])
     {
         $form = $this->formFactory->createBuilder(FormType::class, $data, $options);

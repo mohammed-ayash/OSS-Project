@@ -17,7 +17,10 @@
     <ul class="navbar-nav ml-auto">
         {% if is_granted('ROLE_owner') %}
             <li><a class="btn btn-primary" id="logout" href="{{ path('security_logout') }}"  title="Logout">Logout</a></li>
+        {% elseif is_granted('ROLE_Admin') %}
+            <li><a class="btn btn-primary" id="logout" href="{{ path('security_logout') }}"  title="Logout">Logout</a></li>
         {% elseif is_granted('ROLE_customer') %}
+            <li><a class="btn btn-primary mr-2" id="logout" href="{{ path('country_new') }}"  title="Logout">convert to owner shop</a></li>
             <li><a class="btn btn-primary" id="logout" href="{{ path('security_logout') }}"  title="Logout">Logout</a></li>
         {% else  %}
             <li><a class="btn btn-primary" id="logout" href="{{ path('security_login') }}"  title="Logout">Sign In</a></li>

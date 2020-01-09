@@ -1,39 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Favorite index{% endblock %}
+{% block title %}Product index{% endblock %}
+
+
+{% block breadcrumb %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Favorite</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Favorite</li>
+            </ol>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+{% endblock %}
+
+
 
 {% block body %}
-    <h1>Favorite index</h1>
-
-    <table class="table">
-        <thead>
+    <div class="card">
+        <table class="table">
+            <thead>
             <tr>
-                <th>Id</th>
-                <th>product</th>
+                <th>id</th>
+                <th>Name Product</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for favorite in favorites %}
-            {% if is_granted('edit',favorite) %}
-            <tr>
-                <td>{{ favorite.id }}</td>
-                <td>{{ favorite.product }}</td>
-                <td>
-                    {% if is_granted('edit',favorite) %}
-                        <a class="btn btn-outline-success ml-2" href="{{ path('favorite_edit', {'id': favorite.id}) }}">edit</a>
-                    {% endif %}
-                    {% if is_granted('delete',favorite) %}
-                        {{ include('favorite/_delete_form.html.twig') }}
-                    {% endif %}
-                </td>
-            </tr>
-            {% endif %}
-        {% else %}
-            <tr>
-                <td colspan="2">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for favorite in favorites %}
+                <tr>
+                    <td>{{ favorite.id }}</td>
+                    <td>{{ favorite.product }}</td>
+                    <td>
+                        {% if is_granted('edit',favorite) %}
+                            <a class="btn btn-outline-success ml-2" href="{{ path('favorite_edit', {'id': favorite.id}) }}">edit</a>
+                        {% endif %}
+                        {% if is_granted('delete',favorite) %}
+                            {{ include('favorite/_delete_form.html.twig') }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $('.fancybox').fancybox({});
+    </script>
+{% endblock %}
+

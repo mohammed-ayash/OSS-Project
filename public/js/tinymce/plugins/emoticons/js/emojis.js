@@ -4885,7 +4885,7 @@ window.tinymce.Resource.add("tinymce.plugins.emoticons", {
     category: "objects"
   },
   vhs: {
-    keywords: [ "record", "video", "oldschool", "90s", "80s" ],
+    keywords: [ "record", "product.css", "oldschool", "90s", "80s" ],
     "char": "\ud83d\udcfc",
     fitzpatrick_scale: false,
     category: "objects"
@@ -4915,7 +4915,7 @@ window.tinymce.Resource.add("tinymce.plugins.emoticons", {
     category: "objects"
   },
   film_projector: {
-    keywords: [ "video", "tape", "record", "movie" ],
+    keywords: [ "product.css", "tape", "record", "movie" ],
     "char": "\ud83d\udcfd",
     fitzpatrick_scale: false,
     category: "objects"

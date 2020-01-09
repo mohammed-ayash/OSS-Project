@@ -45,12 +45,8 @@ class FavoriteController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('favorite_index');
+            //TODO redirect
 
-
-        return $this->render('favorite/new.html.twig', [
-            'favorite' => $favorite,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**

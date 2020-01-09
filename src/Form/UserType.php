@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class UserType extends AbstractType
 {
+    //for build new form
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $imageConstraints = [
@@ -27,7 +30,7 @@ class UserType extends AbstractType
         $builder
             ->add('username')
             ->add('email')
-            ->add('password')
+            ->add('password', PasswordType::class)
             ->add('picture',FileType::class,[
                 'label'=> 'Image',
                 'required'=> false,
@@ -35,7 +38,9 @@ class UserType extends AbstractType
                 'constraints' => $imageConstraints
             ])
             ->add('birthday')
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'choices' => ['Owner Shop' => true, 'Customer' => false],
+            ])
             ->add('country')
         ;
     }

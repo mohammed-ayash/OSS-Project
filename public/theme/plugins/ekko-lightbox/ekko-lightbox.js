@@ -257,7 +257,7 @@ var Lightbox = (function ($) {
 				if (!type && this._getVimeoId(src)) type = 'vimeo';
 				if (!type && this._getInstagramId(src)) type = 'instagram';
 
-				if (!type || ['image', 'youtube', 'vimeo', 'instagram', 'video', 'url'].indexOf(type) < 0) type = 'url';
+				if (!type || ['image', 'youtube', 'vimeo', 'instagram', 'product.css', 'url'].indexOf(type) < 0) type = 'url';
 
 				return type;
 			}
@@ -299,7 +299,7 @@ var Lightbox = (function ($) {
 				var currentRemote = this._$element.attr('data-remote') || this._$element.attr('href');
 				var currentType = this._detectRemoteType(currentRemote, this._$element.attr('data-type') || false);
 
-				if (['image', 'youtube', 'vimeo', 'instagram', 'video', 'url'].indexOf(currentType) < 0) return this._error(this._config.strings.type);
+				if (['image', 'youtube', 'vimeo', 'instagram', 'product.css', 'url'].indexOf(currentType) < 0) return this._error(this._config.strings.type);
 
 				switch (currentType) {
 					case 'image':
@@ -315,7 +315,7 @@ var Lightbox = (function ($) {
 					case 'instagram':
 						this._showInstagramVideo(this._getInstagramId(currentRemote), $toUse);
 						break;
-					case 'video':
+					case 'product.css':
 						this._showHtml5Video(currentRemote, $toUse);
 						break;
 					default:

@@ -48,6 +48,7 @@ class User implements UserInterface , \Serializable
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="password is required")
      */
     private $password;
 
@@ -72,6 +73,13 @@ class User implements UserInterface , \Serializable
      */
     private $type;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isAdmin", type="boolean", nullable=false)
+     */
+    private $isAdmin;
+
 
     /**
      * @var \Country
@@ -94,11 +102,14 @@ class User implements UserInterface , \Serializable
      * @ORM\OneToMany(targetEntity="Favorite" , mappedBy="product")
      */
     private $favorite;
+
+    //construct
     public function __construct()
     {
         $this->products = new ArrayCollection();
     }
 
+    //get array product
     /**
      * @return Collection|Product[]
      */
@@ -151,7 +162,6 @@ class User implements UserInterface , \Serializable
 
     public function setpassword(string $password): self
     {
-        $hashed = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
         $this->password = $password;
 
         return $this;
@@ -169,23 +179,26 @@ class User implements UserInterface , \Serializable
         return $this;
     }
 
+    //get picture Directory path
     public function getpictureUploadDir()
     {
-        return 'upload/User';
+        return '/upload/User';
     }
 
+    //get full picture path
     public function getpictureWebPath()
     {
         if($this->getpicture()) {
             return $this->getpictureUploadDir() . '/' . $this->getpicture();
         }
     }
-
+    //get picture path from the root
     public function getpictureUploadRootDir()
     {
         return realpath(__DIR__.'/../../public').'/'.$this->getpictureUploadDir();
     }
 
+    //get full picture path from the root
     public function getpictureAbsolutePath()
     {
         return null === $this->getpicture()
@@ -193,6 +206,7 @@ class User implements UserInterface , \Serializable
             : $this->getpictureUploadRootDir().'/'.$this->getpicture();
     }
 
+    //delete picture from database then from the path .
     public function deleteCurrentpicture()
     {
         $fullPath = $this->getpictureAbsolutePath();
@@ -275,7 +289,7 @@ class User implements UserInterface , \Serializable
         return $this;
     }
 
-
+    //set time now
     /**
      * @ORM\PrePersist()
      */
@@ -290,9 +304,11 @@ class User implements UserInterface , \Serializable
         return $this->username;
     }
 
-
+    //authondcition
     public function getRoles()
     {
+        if ($this->isAdmin)
+            return['ROLE_Admin'];
         if($this->type)
             return ['ROLE_owner'];
         else

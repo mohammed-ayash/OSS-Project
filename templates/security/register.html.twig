@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/register.css">
+{% endblock %}
+
 {% block include %}
 {% endblock %}
 
 {% block body %}
 
-    <div class="card card-primary">
+    <div class="card card-dark ">
         <div class="card-header">
-            <h3 class="card-title">Add new User</h3>
+            <h3 class="card-title">Sign Up</h3>
         </div>
 
         {{ form_start(form) }}
@@ -15,7 +20,8 @@
             {{ form_widget(form) }}
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-dark">Register</button>
+            <a class="btn  btn-dark" id="logout" href="{{ path('security_login') }}"  title="Logout">Sign In</a>
         </div>
         {{ form_end(form) }}
     </div>

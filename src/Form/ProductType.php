@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ProductType extends AbstractType
 {
+    //for build new form
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $imageConstraints = [

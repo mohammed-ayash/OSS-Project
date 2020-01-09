@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CountryType extends AbstractType
 {
+    //for build new form
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

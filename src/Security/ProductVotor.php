@@ -15,9 +15,11 @@ class ProductVotor extends Voter
     const DELETE = 'delete';
     protected function supports(string $attribute, $subject)
     {
+
         if (!in_array($attribute,[self::EDIT,self::DELETE])){
             return false;
         }
+        //check if the validation in product subject
         if (!$subject instanceof Product){
             return false;
         }
@@ -31,11 +33,15 @@ class ProductVotor extends Voter
         if (!$authentictedUser instanceof User){
             return false;
         }
+        //check if the user is admin
+        if ($authentictedUser->getRoles()[0]== 'ROLE_Admin' )
+            return true;
         /**
          * @var Product $product
          */
         $product=$subject;
 
+        //check if the  product to this user
         return  $product->getUser()->getid() === $authentictedUser->getid();
     }
 }

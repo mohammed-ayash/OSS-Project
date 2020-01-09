@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Product
@@ -26,6 +28,8 @@ class Product
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="name is required")
+     *
      */
     private $name;
 
@@ -33,6 +37,7 @@ class Product
      * @var string
      *
      * @ORM\Column(name="Description", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Description is required")
      */
     private $description;
 
@@ -40,6 +45,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="price", type="integer", nullable=false)
+     * @Assert\NotBlank(message="price is required")
      */
     private $price;
 
@@ -128,7 +134,7 @@ class Product
     {
         return $this->createAt;
     }
-
+    //set time now
     /**
      * @param \DateTimeInterface $createAt
      */
@@ -152,11 +158,13 @@ class Product
         return $this;
     }
 
+    //get picture Directory path
     public function getpictureUploadDir()
     {
-        return 'upload/Product';
+        return '/upload/Product';
     }
 
+    //get full picture path
     public function getpictureWebPath()
     {
         if($this->getpicture()) {
@@ -164,11 +172,13 @@ class Product
         }
     }
 
+    //get picture path from the root
     public function getpictureUploadRootDir()
     {
         return realpath(__DIR__.'/../../public').'/'.$this->getpictureUploadDir();
     }
 
+    //get full picture path from the root
     public function getpictureAbsolutePath()
     {
         return null === $this->getpicture()
@@ -176,6 +186,7 @@ class Product
             : $this->getpictureUploadRootDir().'/'.$this->getpicture();
     }
 
+    //delete picture from database then from the path .
     public function deleteCurrentpicture()
     {
         $fullPath = $this->getpictureAbsolutePath();
@@ -223,7 +234,7 @@ class Product
         return $this->name;
     }
 
-
+    //before add the rows to data add the current time to createAt
     /**
      * @ORM\PrePersist()
      */
